@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+
+    <Button
+        android:id="@+id/btn_identity_card"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="@string/id_card_citizen_identity_card" />
+
+    <Button
+        android:id="@+id/btn_passport_card"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="@string/passport" />
+    <Button
+        android:id="@+id/btn_driver_licence_card"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="@string/driver_s_licence" />
+
+</LinearLayout>
