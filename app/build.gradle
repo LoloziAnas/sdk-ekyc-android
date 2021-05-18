@@ -30,7 +30,7 @@ android {
             }
         }
         python{
-            buildPython "C:/Users/LZI/anaconda3/python.exe"
+            buildPython "C:/Users/LZI/AppData/Local/Programs/Python/Python39/python.exe"
         }
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
@@ -54,7 +54,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    testImplementation 'junit:junit:4.+'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
