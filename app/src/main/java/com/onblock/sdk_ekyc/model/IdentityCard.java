@@ -9,5 +9,4 @@ public class IdentityCard {
     private String originLocation;
     private String validDate;
 
-
 }
