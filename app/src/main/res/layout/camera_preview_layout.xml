@@ -18,6 +18,6 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/ic_ekyc_capture"
-        android:contentDescription="@string/app_name"
+        android:contentDescription="@string/capture_button"
         android:scaleType="fitCenter" />
 </LinearLayout>

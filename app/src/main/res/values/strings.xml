@@ -8,4 +8,5 @@
     <string name="passport">Passport</string>
     <string name="driver_s_licence">Driver\'s licence</string>
     <string name="onblock">OnBlock</string>
+    <string name="capture_button">Capture Button</string>
 </resources>
