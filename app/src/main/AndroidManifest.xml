@@ -13,8 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SdkeKYC"
-        android:name="com.chaquo.python.android.PyApplication">
+        android:theme="@style/Theme.SdkeKYC">
         <activity
             android:name=".IdentityActivity"
             android:screenOrientation="portrait" />
