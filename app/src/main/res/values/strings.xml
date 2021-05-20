@@ -9,4 +9,6 @@
     <string name="driver_s_licence">Driver\'s licence</string>
     <string name="onblock">OnBlock</string>
     <string name="capture_button">Capture Button</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

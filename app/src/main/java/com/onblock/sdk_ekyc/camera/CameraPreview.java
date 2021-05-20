@@ -10,6 +10,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 
+import androidx.fragment.app.Fragment;
+
 import com.onblock.sdk_ekyc.R;
 
 import java.io.IOException;
@@ -45,6 +47,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void surfaceCreated(SurfaceHolder holder) {
+
         Camera.Parameters parameters = mCamera.getParameters();
         //change the orientation of the camera
         if(this.getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE){
