@@ -35,8 +35,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         // underlying surface is created and destroyed.
         mHolder = getHolder();
         mHolder.addCallback(this);
-        mSurfaceView = new SurfaceView(context);
-        mSurfaceView.setBackgroundResource(R.drawable.bg_document_capture);
+        mSurfaceView = findViewById(R.id.sv_camera);
     }
 
     @Override
@@ -53,10 +52,13 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         if(this.getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE){
             parameters.set(ORIENTATION, PORTRAIT);
             mCamera.setDisplayOrientation(90);
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
             parameters.setRotation(90);
         }else {
             parameters.set(ORIENTATION, LANDSCAPE);
             mCamera.setDisplayOrientation(0);
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+
             parameters.setRotation(0);
         }
         mCamera.setParameters(parameters);

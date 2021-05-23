@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.onblock.sdk_ekyc.fragment.CameraFragment;
 import com.onblock.sdk_ekyc.ocr.TesseractOCR;
 
 
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TesseractOCR tessRecognizer = new TesseractOCR(this, "eng");
+        //TesseractOCR tessRecognizer = new TesseractOCR(this, "eng");
         //tessRecognizer.doOCR(this, Bitmap.createBitmap(""));
 
         Button btnIdentityCard = findViewById(R.id.btn_identity_card);
