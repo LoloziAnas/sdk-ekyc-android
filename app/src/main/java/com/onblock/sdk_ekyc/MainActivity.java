@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnIdentityCard = findViewById(R.id.btn_identity_card);
         //btnIdentityCard.setText(str);
         btnIdentityCard.setOnClickListener(v ->
-                startActivity(new Intent(MainActivity.this, IdentityActivity.class)));
+                startActivity(new Intent(MainActivity.this, CameraViewActivity.class)));
     }
 
 }

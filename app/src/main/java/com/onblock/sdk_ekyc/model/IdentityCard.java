@@ -1,7 +1,8 @@
 package com.onblock.sdk_ekyc.model;
 
 public class IdentityCard {
-    private String name;
+    private String firstName;
+    private String lastName;
     private String cardType;
     private String birthDay;
     private String nationality;

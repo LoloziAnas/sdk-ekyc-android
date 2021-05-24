@@ -27,13 +27,15 @@ public class IdentityActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera_preview_layout);
 
+        getSupportActionBar().hide();
         if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         }
 
         Camera camera = getCameraInstance();
+        SurfaceView surfaceView = findViewById(R.id.sv_camera);
         //get an instance of CameraPreview
-        CameraPreview cameraPreview = new CameraPreview(this, camera);
+        CameraPreview cameraPreview = new CameraPreview(this, camera, surfaceView);
         FrameLayout preview = findViewById(R.id.camera_preview);
         preview.addView(cameraPreview);
 

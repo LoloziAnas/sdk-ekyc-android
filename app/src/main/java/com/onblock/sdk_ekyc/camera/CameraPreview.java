@@ -27,15 +27,16 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private final static String PORTRAIT = "portrait";
     private final static String LANDSCAPE = "landscape";
 
-    public CameraPreview(Context context, Camera camera) {
+    public CameraPreview(Context context, Camera camera, SurfaceView surfaceView) {
         super(context);
         mCamera = camera;
 
         // Install a SurfaceHolder.Callback so we get notified when the
         // underlying surface is created and destroyed.
-        mHolder = getHolder();
+        mHolder = surfaceView.getHolder();
         mHolder.addCallback(this);
-        mSurfaceView = findViewById(R.id.sv_camera);
+
+        mSurfaceView = surfaceView;
     }
 
     @Override
