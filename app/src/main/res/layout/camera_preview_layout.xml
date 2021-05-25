@@ -3,8 +3,11 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-
     android:id="@+id/camera_preview">
+    <SurfaceView
+        android:id="@+id/sv_camera"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <ImageButton
         android:id="@+id/btnCapture"
@@ -16,11 +19,5 @@
         android:background="@drawable/ic_ekyc_capture"
         android:contentDescription="@string/capture_button"
         android:scaleType="fitCenter" />
-    <SurfaceView
-        android:id="@+id/sv_camera"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-
 
 </FrameLayout>
