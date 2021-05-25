@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.Button;
 
-import com.onblock.sdk_ekyc.fragment.CameraFragment;
 import com.onblock.sdk_ekyc.ocr.TesseractOCR;
 
 
