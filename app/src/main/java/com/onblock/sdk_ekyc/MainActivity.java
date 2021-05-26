@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         //btnIdentityCard.setText(str);
         btnIdentityCard.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, CaptureActivity.class)));
+
     }
 
 }

@@ -18,7 +18,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.RequiresPermission;
 
+import com.onblock.sdk_ekyc.graphic.FrameMetadata;
 import com.onblock.sdk_ekyc.graphic.GraphicOverlay;
+import com.onblock.sdk_ekyc.mrz.TextRecognitionProcessor;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -97,7 +99,7 @@ public class CameraSource {
     // @GuardedBy("processorLock")
 
 
-    //private TextRecognitionProcessor frameProcessor;
+    private TextRecognitionProcessor frameProcessor;
 
     /**
      * Map to convert between a byte array, received from the camera, and its associated byte buffer.
@@ -128,9 +130,9 @@ public class CameraSource {
             processingRunnable.release();
             cleanScreen();
 
-           /* if (frameProcessor != null) {
+            if (frameProcessor != null) {
                 frameProcessor.stop();
-            }*/
+            }
         }
     }
 
@@ -569,7 +571,7 @@ public class CameraSource {
             processingRunnable.setNextFrame(data, camera);
         }
     }
-/*
+
     public void setMachineLearningFrameProcessor(TextRecognitionProcessor processor) {
         synchronized (processorLock) {
             cleanScreen();
@@ -578,7 +580,7 @@ public class CameraSource {
             }
             frameProcessor = processor;
         }
-    }*/
+    }
 
     /**
      * This runnable controls access to the underlying receiver, calling it to process frames when
@@ -698,7 +700,7 @@ public class CameraSource {
                 try {
                     synchronized (processorLock) {
                         Log.d(TAG, "Process an image");
-/*
+
                         frameProcessor.process(
                                 data,
                                 new FrameMetadata.Builder()
@@ -708,7 +710,7 @@ public class CameraSource {
                                         .setCameraFacing(facing)
                                         .build(),
                                 graphicOverlay);
-*/
+
                     }
                 } catch (Throwable t) {
                     Log.e(TAG, "Exception thrown from receiver.", t);
