@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 
 import com.onblock.sdk_ekyc.camera.CameraSource;
@@ -40,6 +41,7 @@ public class CaptureActivity extends AppCompatActivity {
         }
         createCameraSource();
         startCameraSource();
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -101,6 +103,18 @@ public class CaptureActivity extends AppCompatActivity {
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }*/
+
+    private void toValidationActivity(){
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                // TODO: Your application init goes here.
+                Intent mInHome = new Intent(CaptureActivity.this,InfoValidationActivity.class);
+                CaptureActivity.this.startActivity(mInHome);
+                CaptureActivity.this.finish();
+            }
+        }, 3000);
+    }
 
 
 }
