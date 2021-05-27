@@ -1,5 +1,7 @@
 package com.onblock.sdk_ekyc.mrz;
 
+import android.graphics.Color;
+import android.provider.CalendarContract;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,7 @@ import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.onblock.sdk_ekyc.graphic.FrameMetadata;
 import com.onblock.sdk_ekyc.graphic.GraphicOverlay;
+import com.onblock.sdk_ekyc.graphic.TextGraphic;
 
 import java.nio.ByteBuffer;
 import java.util.List;
@@ -27,8 +30,9 @@ public class TextRecognitionProcessor {
     private ResultListener resultListener;
     private String scannedTextBuffer;
 
-    public TextRecognitionProcessor(TextRecognizer textRecognizer) {
+    public TextRecognitionProcessor(TextRecognizer textRecognizer, ResultListener resultListener) {
         this.textRecognizer = textRecognizer;
+        this.resultListener = resultListener;
     }
 
 
@@ -64,10 +68,16 @@ public class TextRecognitionProcessor {
             for (int j = 0; j < lines.size(); j++) {
                 List<Text.Element> elements = lines.get(j).getElements();
                 for (int k = 0; k < elements.size(); k++) {
-                    //filterScannedText(graphicOverlay, elements.get(k));
+                    filterScannedText(graphicOverlay, elements.get(k));
                 }
             }
         }
+    }
+
+    private void filterScannedText(GraphicOverlay graphicOverlay, Text.Element element) {
+        GraphicOverlay.Graphic textGraphic = new TextGraphic(graphicOverlay, element, Color.GREEN);
+        scannedTextBuffer += element.getText();
+
     }
 
     protected void onFailure(@NonNull Exception e) {
@@ -101,7 +111,7 @@ public class TextRecognitionProcessor {
         textRecognizer.close();
     }
 
-    interface  ResultListener{
+    public interface  ResultListener{
         void onSuccess();
         void onError(Exception exception);
     }

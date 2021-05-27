@@ -30,7 +30,7 @@ public class FrameMetadata {
         cameraFacing = facing;
     }
 
-    /** Builder of {@link com.alimert.passportreader.mlkit.other.FrameMetadata}. */
+    /** Builder of {@link com.onblock.sdk_ekyc.graphic.FrameMetadata}. */
     public static class Builder {
 
         private int width;

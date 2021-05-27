@@ -13,10 +13,11 @@ import android.util.Log;
 import com.onblock.sdk_ekyc.camera.CameraSource;
 import com.onblock.sdk_ekyc.camera.CameraSourcePreview;
 import com.onblock.sdk_ekyc.graphic.GraphicOverlay;
+import com.onblock.sdk_ekyc.mrz.TextRecognitionProcessor;
 
 import java.io.IOException;
 
-public class CaptureActivity extends AppCompatActivity {
+public class CaptureActivity extends AppCompatActivity implements  TextRecognitionProcessor.ResultListener{
 
     private CameraSource cameraSource = null;
     private CameraSourcePreview preview;
@@ -117,4 +118,17 @@ public class CaptureActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onSuccess() {
+        Intent returnIntent = new Intent();
+        //returnIntent.putExtra();
+        setResult(Activity.RESULT_OK);
+        finish();
+    }
+
+    @Override
+    public void onError(Exception exception) {
+        setResult(Activity.RESULT_CANCELED);
+        finish();
+    }
 }
