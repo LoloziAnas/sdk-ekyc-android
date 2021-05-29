@@ -20,6 +20,7 @@ import com.onblock.sdk_ekyc.graphic.TextGraphic;
 import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Pattern;
 
 public class TextRecognitionProcessor {
 
@@ -78,6 +79,7 @@ public class TextRecognitionProcessor {
         GraphicOverlay.Graphic textGraphic = new TextGraphic(graphicOverlay, element, Color.GREEN);
         scannedTextBuffer += element.getText();
 
+
     }
 
     protected void onFailure(@NonNull Exception e) {
@@ -105,7 +107,9 @@ public class TextRecognitionProcessor {
                         });
         // Begin throttling until this frame of input has been processed, either in onSuccess or
         // onFailure.
+
         shouldThrottle.set(true);
+
     }
     public void stop() {
         textRecognizer.close();

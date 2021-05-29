@@ -43,6 +43,7 @@ public class CaptureActivity extends AppCompatActivity implements  TextRecogniti
         createCameraSource();
         startCameraSource();
 
+        toValidationActivity();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
