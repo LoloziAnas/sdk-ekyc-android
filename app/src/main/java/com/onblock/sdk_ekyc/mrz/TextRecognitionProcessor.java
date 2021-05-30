@@ -4,6 +4,10 @@ import android.graphics.Color;
 import android.provider.CalendarContract;
 import android.util.Log;
 
+import android.graphics.Color;
+import android.os.Handler;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -12,28 +16,62 @@ import com.google.android.gms.tasks.Task;
 import com.google.mlkit.common.MlKitException;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.text.Text;
+import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.onblock.sdk_ekyc.graphic.FrameMetadata;
 import com.onblock.sdk_ekyc.graphic.GraphicOverlay;
 import com.onblock.sdk_ekyc.graphic.TextGraphic;
 
+/*import net.sf.scuba.data.Gender;
+
+import org.jmrtd.lds.icao.MRZInfo;*/
+
 import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TextRecognitionProcessor {
 
     private static final String TAG = TextRecognitionProcessor.class.getName();
+
     private final TextRecognizer textRecognizer;
-    private final AtomicBoolean shouldThrottle = new AtomicBoolean(false);
 
     private ResultListener resultListener;
+
     private String scannedTextBuffer;
 
-    public TextRecognitionProcessor(TextRecognizer textRecognizer, ResultListener resultListener) {
-        this.textRecognizer = textRecognizer;
+
+    public static final String TYPE_PASSPORT = "P<";
+
+    public static final String TYPE_ID_CARD = "I<";
+
+    public static final String ID_CARD_TD_1_LINE_1_REGEX = "([A|C|I][A-Z0-9<]{1})([A-Z]{3})([A-Z0-9<]{31})";
+
+    public static final String ID_CARD_TD_1_LINE_2_REGEX = "([0-9]{6})([0-9]{1})([M|F|X|<]{1})([0-9]{6})([0-9]{1})([A-Z]{3})([A-Z0-9<]{11})([0-9]{1})";
+
+    public static final String ID_CARD_TD_1_LINE_3_REGEX = "([A-Z0-9<]{30})";
+
+    public static final String PASSPORT_TD_3_LINE_1_REGEX = "(P[A-Z0-9<]{1})([A-Z]{3})([A-Z0-9<]{39})";
+
+    public static final String PASSPORT_TD_3_LINE_2_REGEX = "([A-Z0-9<]{9})([0-9]{1})([A-Z]{3})([0-9]{6})([0-9]{1})([M|F|X|<]{1})([0-9]{6})([0-9]{1})([A-Z0-9<]{14})([0-9]{1})([0-9]{1})";
+
+    // Whether we should ignore process(). This is usually caused by feeding input data faster than
+    // the model can handle.
+    private final AtomicBoolean shouldThrottle = new AtomicBoolean(false);
+
+    public TextRecognitionProcessor( ResultListener resultListener) {
+
         this.resultListener = resultListener;
+        textRecognizer = TextRecognition.getClient();
+    }
+
+    //region ----- Exposed Methods -----
+
+
+    public void stop() {
+        textRecognizer.close();
     }
 
 
@@ -51,6 +89,11 @@ public class TextRecognitionProcessor {
 
         detectInVisionImage(inputImage, frameMetadata, graphicOverlay);
     }
+
+    //endregion
+
+    //region ----- Helper Methods -----
+
     protected Task<Text> detectInImage(InputImage image) {
         return textRecognizer.process(image);
     }
@@ -80,12 +123,36 @@ public class TextRecognitionProcessor {
         scannedTextBuffer += element.getText();
 
 
+
+            Pattern patternPassportTD3Line1 = Pattern.compile(PASSPORT_TD_3_LINE_1_REGEX);
+            Matcher matcherPassportTD3Line1 = patternPassportTD3Line1.matcher(scannedTextBuffer);
+
+            Pattern patternPassportTD3Line2 = Pattern.compile(PASSPORT_TD_3_LINE_2_REGEX);
+            Matcher matcherPassportTD3Line2 = patternPassportTD3Line2.matcher(scannedTextBuffer);
+
+            if(matcherPassportTD3Line1.find() && matcherPassportTD3Line2.find()) {
+                graphicOverlay.add(textGraphic);
+                String line2 = matcherPassportTD3Line2.group(0);
+                String documentNumber = line2.substring(0, 9);
+                documentNumber = documentNumber.replace("O", "0");
+                String dateOfBirthDay = line2.substring(13, 19);
+                String expiryDate = line2.substring(21, 27);
+
+                Log.d(TAG, "Scanned Text Buffer Passport ->>>> " + "Doc Number: " + documentNumber + " DateOfBirth: " + dateOfBirthDay + " ExpiryDate: " + expiryDate);
+
+               /* MRZInfo mrzInfo = buildTempMrz(documentNumber, dateOfBirthDay, expiryDate);
+
+                if (mrzInfo != null)
+                    finishScanning(mrzInfo);*/
+            }
+
     }
 
     protected void onFailure(@NonNull Exception e) {
         Log.w(TAG, "Text detection failed." + e);
         resultListener.onError(e);
     }
+
     private void detectInVisionImage(InputImage image, final FrameMetadata metadata, final GraphicOverlay graphicOverlay) {
 
         detectInImage(image)
@@ -107,16 +174,42 @@ public class TextRecognitionProcessor {
                         });
         // Begin throttling until this frame of input has been processed, either in onSuccess or
         // onFailure.
-
         shouldThrottle.set(true);
-
-    }
-    public void stop() {
-        textRecognizer.close();
     }
 
-    public interface  ResultListener{
+    /*private void finishScanning(final MRZInfo mrzInfo) {
+        try {
+            if(isMrzValid(mrzInfo)) {
+                // Delay returning result 1 sec. in order to make mrz text become visible on graphicOverlay by user
+                // You want to call 'resultListener.onSuccess(mrzInfo)' without no delay
+                new Handler().postDelayed(() -> resultListener.onSuccess(mrzInfo), 3000);
+            }
+
+        } catch(Exception exp) {
+            Log.d(TAG, "MRZ DATA is not valid");
+        }
+    }
+
+    private MRZInfo buildTempMrz(String documentNumber, String dateOfBirth, String expiryDate) {
+        MRZInfo mrzInfo = null;
+        try {
+            mrzInfo = new MRZInfo("P","NNN", "", "", documentNumber, "NNN", dateOfBirth, Gender.UNSPECIFIED, expiryDate, "");
+        } catch (Exception e) {
+            Log.d(TAG, "MRZInfo error : " + e.getLocalizedMessage());
+        }
+
+        return mrzInfo;
+    }
+
+    private boolean isMrzValid(MRZInfo mrzInfo) {
+        return mrzInfo.getDocumentNumber() != null && mrzInfo.getDocumentNumber().length() >= 8 &&
+                mrzInfo.getDateOfBirth() != null && mrzInfo.getDateOfBirth().length() == 6 &&
+                mrzInfo.getDateOfExpiry() != null && mrzInfo.getDateOfExpiry().length() == 6;
+    }
+*/
+    public interface ResultListener {
         void onSuccess();
-        void onError(Exception exception);
+        void onError(Exception exp);
     }
 }
+
