@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 
 public class TextRecognitionProcessor {
 
-    private static final String TAG = TextRecognitionProcessor.class.getName();
+    private static final String TAG = TextRecognitionProcessor.class.getSimpleName();
 
     private final TextRecognizer textRecognizer;
 
