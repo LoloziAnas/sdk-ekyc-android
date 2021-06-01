@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SdkeKYC">
-        <activity android:name=".CaptureActivity"></activity>
+        <activity android:name=".view.SignatureActivity"></activity>
+        <activity android:name=".CaptureActivity" />
         <activity android:name=".InfoValidationActivity" />
         <activity android:name=".CameraViewActivity" />
         <activity
