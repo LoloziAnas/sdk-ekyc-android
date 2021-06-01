@@ -1,4 +1,4 @@
-package com.onblock.sdk_ekyc.view;
+package com.onblock.sdk_ekyc;
 
 import androidx.appcompat.app.AppCompatActivity;
 
