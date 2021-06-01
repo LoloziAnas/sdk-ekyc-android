@@ -1,13 +1,17 @@
 package com.onblock.sdk_ekyc;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.onblock.sdk_ekyc.ocr.TessOCR;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +22,11 @@ public class MainActivity extends AppCompatActivity {
     private Button btnIdentityCard, btnPassportCard;
     private TextView tvResult;
     private ImageView ivPhoto;
+
+    /* Tesseract Library variables */
+    public static final String DATA_PATH = Environment.getExternalStorageDirectory().toString();
+    public static AssetManager assetManager;
+    public static TessOCR tessOCR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
