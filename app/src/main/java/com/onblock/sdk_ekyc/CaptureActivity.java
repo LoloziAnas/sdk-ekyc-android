@@ -43,7 +43,7 @@ public class CaptureActivity extends AppCompatActivity implements  TextRecogniti
         createCameraSource();
         startCameraSource();
 
-        toValidationActivity();
+        //toValidationActivity();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -76,7 +76,7 @@ public class CaptureActivity extends AppCompatActivity implements  TextRecogniti
             cameraSource.setFacing(CameraSource.CAMERA_FACING_BACK);
         }
 
-        //cameraSource.setMachineLearningFrameProcessor(new TextRecognitionProcessor(docType, this));
+        cameraSource.setMachineLearningFrameProcessor(new TextRecognitionProcessor( this));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.SignatureActivity">
+    tools:context=".SignatureActivity">
     <com.github.gcacace.signaturepad.views.SignaturePad
         android:id="@+id/signature_pad"
         android:layout_width="match_parent"

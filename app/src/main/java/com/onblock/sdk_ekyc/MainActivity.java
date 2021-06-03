@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.onblock.sdk_ekyc.ocr.TessOCR;
 
+import static android.os.Environment.getExternalStorageDirectory;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView ivPhoto;
 
     /* Tesseract Library variables */
-    public static final String DATA_PATH = Environment.getExternalStorageDirectory().toString();
+    public static final String DATA_PATH = getExternalStorageDirectory().toString();
     public static AssetManager assetManager;
     public static TessOCR tessOCR;
 
